@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y python3-dev build-essential nginx
+
+COPY requirements.txt /app/
+RUN pip install --upgrade pip
+RUN pip install -r /app/requirements.txt
+
+# Копирую все файлы в контейнер
+COPY . /app/
+
+# Указываю рабочую папку
+WORKDIR /app
+
+# Команда для запуска FastAPI
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
