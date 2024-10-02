@@ -1,7 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = "postgresql+asyncpg://postgres:386790qQ@localhost/twitter_on_fastapi"
+from config import DATABASE_URL
+
+# DATABASE_URL = "postgresql+asyncpg://mswesson:386790@db/twitter_on_fastapi"
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 async_session = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)

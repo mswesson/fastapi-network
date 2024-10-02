@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    expose:
+      - "8000"  # Открывает порт для связи с Nginx
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./app/html:/usr/share/nginx/html  # Подключите папку static
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"  # Публикует порт Nginx на хосте
+    depends_on:
+      - app
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT}:5432"
+
+  migrate:
+    build: ./app/
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      - db
+
+volumes:
+  postgres_data: 
