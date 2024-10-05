@@ -1,7 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-
 from src.routes import router
 
 app = FastAPI(title=__name__)

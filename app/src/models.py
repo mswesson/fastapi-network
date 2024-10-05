@@ -15,7 +15,6 @@ from sqlalchemy import (
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import relationship, selectinload
-
 from src.database import Base
 from src.test_user_data import TEST_TWEETS_DATA, TEST_USER_DATA
 
@@ -287,7 +286,7 @@ async def sorted_tweets(db: AsyncSession, following_ids: list, tweets: list):
         tweet for tweet in tweets if tweet["author"]["id"] in following_ids
     ]
     tweets_is_not_following = [
-        tweet for tweet in tweets if not tweet["author"]["id"] in following_ids
+        tweet for tweet in tweets if tweet["author"]["id"] not in following_ids
     ]
 
     sorted_tweets_is_following = sorted(

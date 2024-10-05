@@ -7,12 +7,10 @@ from fastapi import (
     Response,
     UploadFile,
 )
-from fastapi.requests import Request
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
 from src.database import engine, get_db
 from src.models import (
     Base,
